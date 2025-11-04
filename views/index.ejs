@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report (HTML Mockup)</title>
+    <style>
+        /* Basic styling to mimic the fixed JavaFX pane */
+        .anchor-pane {
+            width: 600px;
+            height: 400px;
+            border: 1px solid #ccc;
+            position: relative; /* Essential for positioning children */
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 10px;
+        }
+
+        /* Utility classes for positioning (mimicking layoutX/layoutY) */
+        .back-button { position: absolute; top: 10px; left: 10px; }
+        .sales-table-container { position: absolute; top: 50px; left: 26px; }
+        .date-input-group { position: absolute; bottom: 50px; left: 0; right: 0; padding: 0 20px; display: flex; align-items: center; justify-content: flex-start; }
+        
+        /* Table styling */
+        .sales-report-table { width: 557px; border-collapse: collapse; }
+        .sales-report-table th, .sales-report-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .sales-report-table th { background-color: #f2f2f2; }
+        
+        /* Mimicking the control row at the bottom */
+        .date-label { margin-right: 5px; }
+        .date-field { margin-right: 20px; padding: 5px; }
+        .generate-button { margin-left: auto; }
+
+    </style>
+</head>
+<body>
+
+<div class="anchor-pane">
+    <button class="back-button">Back</button>
+
+    <div class="sales-table-container">
+        <h3>Sales Report</h3>
+        <table class="sales-report-table">
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Menu Item</th> <th style="width: 50%;">Number of Item Sold</th> </tr>
+            </thead>
+            <tbody>
+                <tr><td>Coffee</td><td>125</td></tr>
+                <tr><td>Muffin</td><td>89</td></tr>
+                </tbody>
+        </table>
+    </div>
+
+    <div class="date-input-group">
+        <label class="date-label" style="margin-left: 25px;">From:</label>
+        <input type="text" class="date-field" placeholder="YYYY-MM-DD" value="" style="width: 130px;">
+
+        <label class="date-label" style="margin-left: 50px;">To:</label>
+        <input type="text" class="date-field" placeholder="YYYY-MM-DD" value="" style="width: 130px;">
+        
+        <button class="generate-button">Generate</button>
+    </div>
+</div>
+
+</body>
+</html>
