@@ -91,7 +91,7 @@ async function generateTotalCost(from_date, to_date) {
 
 app.get('/', async (req, res) => {
     // Default dates for a full year if no query params are provided
-    const { from_date = '2023-01-01', to_date = '2023-12-31' } = req.query;
+    const { from_date = '2025-10-01', to_date = '2025-10-30' } = req.query;
 
     try {
         // Run both database queries in parallel
