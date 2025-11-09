@@ -24,49 +24,69 @@
         .date-label { margin-right: 5px; }
         .date-field { margin-right: 20px; padding: 5px; }
         .generate-button { margin-left: auto; }
+        /* Utility classes for positioning (mimicking layoutX/layoutY) */
+        .back-button { position: absolute; top: 10px; left: 10px; }
+        
+        /* MODIFIED: Fixed height and scroll added to the container */
+        .sales-table-container { 
+            position: absolute; 
+            top: 50px; 
+            left: 26px; 
+            
+            /* New properties for fixed size and scrolling */
+            max-height: 200px; /* Set the maximum height for the scrollable area */
+            width: 557px;      /* Match the table width to prevent horizontal scroll issues */
+            overflow-y: auto;  /* Add vertical scrollbar when content exceeds max-height */
+            padding-right: 15px; /* Add padding to account for the scrollbar width */
+        }
+        
+        /* Table styling */
+        .sales-report-table { 
+            width: 100%; /* Change to 100% to fill the container width */
+            border-collapse: collapse; 
+            /* Ensure table header sticks to the top during scroll (Optional: Requires more complex CSS) */
+        }
     </style>
-</head>
+</head> 
 <body>
 
-<div class="anchor-pane">
-    <button class="back-button">Back</button>
-
-    <div class="sales-table-container">
-        <h3>Sales Report</h3>
-        <table class="sales-report-table">
-            <thead>
-                <tr>
-                    <th style="width: 50%;">Menu Item</th>
-                    <th style="width: 50%;">Number of Item Sold</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% if (typeof reportItems !== 'undefined' && reportItems.length > 0) { %>
-                    <% reportItems.forEach(item => { %>
-                        <tr>
-                            <td><%= item.menu_item %></td>
-                            <td><%= item.quantitySold %></td>
-                        </tr>
-                    <% }); %>
-                <% } else { %>
+    <div class="anchor-pane">
+        <button class="back-button">Back</button>
+    
+        <div class="sales-table-container">
+            <h3>Sales Report</h3>
+            
+            <table class="sales-report-table">
+                <thead>
                     <tr>
-                        <td colspan="2" style="text-align: center;">No sales data available.</td>
+                        <th style="width: 50%;">Menu Item</th>
+                        <th style="width: 50%;">Number of Item Sold</th>
                     </tr>
-                <% } %>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="date-input-group">
-        <label class="date-label" style="margin-left: 25px;">From:</label>
-        <input type="text" class="date-field" placeholder="YYYY-MM-DD" value="" style="width: 130px;">
-
-        <label class="date-label" style="margin-left: 50px;">To:</label>
-        <input type="text" class="date-field" placeholder="YYYY-MM-DD" value="" style="width: 130px;">
+                </thead>
+                <tbody>
+                    <% if (typeof reportItems !== 'undefined' && reportItems.length > 0) { %>
+                        <% reportItems.forEach(item => { %>
+                            <tr>
+                                <td><%= item.menu_item %></td>
+                                <td><%= item.quantitySold %></td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="2" style="text-align: center;">No sales data for this period.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
         
-        <button class="generate-button">Generate</button>
+        <div class="total-cost">
+            Total Sales: $<%= typeof totalCost !== 'undefined' ? totalCost.toFixed(2) : '0.00' %>
+        </div>
+        
+        <div class="date-input-group">
+            </div>
     </div>
-</div>
-
-</body>
+    
+    </body>
 </html>
