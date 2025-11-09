@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report (Responsive)</title>
+    <style>
+        /* 1. Reset Positioning for a Responsive Layout */
+        
+        /* Remove fixed width and use max-width for scaling */
+        .anchor-pane {
+            max-width: 90%; /* Scale up to 90% of the screen width */
+            min-width: 300px; /* Prevent shrinking too much on small screens */
+            height: auto; /* Height adapts to content */
+            border: 1px solid #ccc;
+            position: relative; /* Keep relative for containing children if needed */
+            font-family: Arial, sans-serif;
+            margin: 20px auto; /* Centers the pane horizontally */
+            padding: 15px;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
+    
+        /* 2. Responsive Layout for Main Components */
+    
+        /* The back button will be positioned relative to the pane */
+        .back-button { 
+            margin-bottom: 15px; /* Space below the button */
+        }
+        
+        /* Sales Table Container: Occupies the available horizontal space */
+        .sales-table-container { 
+            /* Removed position: absolute and fixed pixel dimensions */
+            width: 100%; /* Take up full width of the parent pane */
+            margin-bottom: 20px; /* Space before total cost */
+        }
+        
+        /* Table styling */
+        .sales-report-table { 
+            width: 100%; /* Crucial: Table adapts to container width */
+            border-collapse: collapse; 
+        }
+        .sales-report-table th, .sales-report-table td { 
+            border: 1px solid #ddd; 
+            padding: 8px; 
+            text-align: left; 
+        }
+        .sales-report-table th { background-color: #f2f2f2; }
+    
+        /* 3. Scrolling Table Area (Still needs a max height, but relative) */
+    
+        /* Use a viewport height unit (vh) or em/rem for better scaling */
+        .sales-table-scroll { 
+            max-height: 40vh; /* Max height is 40% of the viewport height */
+            overflow-y: auto; 
+            margin-top: 10px; /* Separate title from scroll area */
+        }
+        
+        /* 4. Total Cost and Date Input Layout (using Flexbox) */
+        
+        .total-cost { 
+            margin-bottom: 15px; 
+            font-size: 1.2em; 
+            font-weight: bold; 
+        }
+    
+        .date-input-group { 
+            /* Removed position: absolute */
+            width: 100%;
+            padding: 0; /* Remove padding if added previously */
+        }
+        
+        /* Use Flexbox for the form row */
+        .date-form { 
+            display: flex; 
+            flex-wrap: wrap; /* Allows inputs to wrap on small screens */
+            align-items: center; 
+            justify-content: flex-start; 
+            gap: 10px; /* Spacing between elements */
+        }
+        
+        /* Date fields should take a reasonable amount of space */
+        .date-label { 
+            flex-shrink: 0; /* Prevent label from shrinking */
+        }
+        .date-field { 
+            flex-grow: 1; /* Allow field to grow and fill space */
+            min-width: 120px; /* Minimum size for usability */
+            padding: 5px; 
+        }
+        
+        /* Position Generate button to the right */
+        .generate-button { 
+            margin-left: auto; /* Pushes the button to the far right */
+        }
+        
+        /* 5. Media Query for Small Screens (e.g., phones) */
+        @media (max-width: 500px) {
+            /* On very small screens, make the date form stack vertically */
+            .date-form {
+                flex-direction: column;
+                align-items: stretch; /* Stretch items to fill container */
+            }
+            .generate-button {
+                margin-left: 0;
+                width: 100%; /* Full width button */
+            }
+            .date-label {
+                margin-right: 0;
+                margin-top: 5px;
+            }
+        }
+    
+    </style>
+</head> 
+
+<body>
+
+    <div class="anchor-pane">
+        <button class="back-button">Back</button>
+    
+        <div class="sales-table-container">
+            <h3>Sales Report</h3>
+            
+            <div class="sales-table-scroll">
+                <table class="sales-report-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50%;">Menu Item</th>
+                            <th style="width: 50%;">Number of Item Sold</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (typeof reportItems !== 'undefined' && reportItems.length > 0) { %>
+                            <% reportItems.forEach(item => { %>
+                                <tr>
+                                    <td><%= item.menu_item %></td>
+                                    <td><%= item.quantitySold %></td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="2" style="text-align: center;">No sales data for this period.</td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+    
+        <div class="total-cost">
+            Total Sales: $<%= typeof totalCost !== 'undefined' ? totalCost.toFixed(2) : '0.00' %>
+        </div>
+    
+        <div class="date-input-group">
+            <form method="GET" action="/" class="date-form">
+                <label class="date-label">From:</label>
+                <input type="text" class="date-field" name="from_date" placeholder="YYYY-MM-DD" 
+                       value="<%= typeof from_date !== 'undefined' ? from_date : '' %>">
+    
+                <label class="date-label">To:</label>
+                <input type="text" class="date-field" name="to_date" placeholder="YYYY-MM-DD" 
+                       value="<%= typeof to_date !== 'undefined' ? to_date : '' %>">
+                
+                <button type="submit" class="generate-button">Generate</button>
+            </form>
+        </div>
+    </div>
+    
+    </body>
+    </html>
